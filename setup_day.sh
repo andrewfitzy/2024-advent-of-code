@@ -3,6 +3,9 @@
 # Ask for the day
 read -p 'Challenge Day: ' day
 
+# Pad the day with a leading 0 so that the folder is nicely ordered
+day=$(printf %02d "$((10#$day))" );
+
 echo Initialising solution and test folder for day $day
 
 # Copy the two directories and rename to contain the day
