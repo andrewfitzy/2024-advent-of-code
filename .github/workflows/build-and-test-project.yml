@@ -1,0 +1,27 @@
+name: Python Barebones
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          architecture: 'x64'
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.5.4"
+      - name: Install dependencies
+        run:
+          uv pip install -r requirements-dev.txt
+        env:
+          UV_SYSTEM_PYTHON: 1
+      - name: Test with pytest
+        run:
+          pytest --cov-fail-under=80 --cov=src/ --cov-report=term-missing --cov-report=xml

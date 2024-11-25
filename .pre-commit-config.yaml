@@ -1,0 +1,18 @@
+fail_fast: true
+default_stages: [pre-commit, pre-push]
+minimum_pre_commit_version: 3.5.0
+
+
+repos:
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.8.0
+    hooks:
+      - id: ruff
+        stages: [pre-commit]
+      - id: ruff-format
+        stages: [pre-commit]
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        stages: [pre-commit]
