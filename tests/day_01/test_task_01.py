@@ -24,7 +24,9 @@ class TestTask01(unittest.TestCase):
         result = Task01.solve(file_content)
         assert result == expected
 
-    @pytest.mark.skipif(os.environ["TEST_ENV"] == "staging", reason="requires python3.10 or higher")
+    @pytest.mark.skipif(
+        os.environ["TEST_ENV"] == "staging", reason="My input file is not added to git, only run this locally"
+    )
     def test_real_input(self):
         file_content = get_input("tests/day_01/input.txt")
 
