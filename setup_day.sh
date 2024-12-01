@@ -12,6 +12,9 @@ echo Initialising solution and test folder for day $day
 cp -R ./src/day_xx ./src/day_$day
 cp -R ./tests/day_xx ./tests/day_$day
 
+# Copy the example input file and rename
+cp ./tests/day_$day/input_example.txt ./tests/day_$day/input.txt
+
 # Then we'll replace xx in the test files with the day number
 sed -i '' "s/xx/$day/g" ./tests/day_$day/test_task_01.py
 sed -i '' "s/xx/$day/g" ./tests/day_$day/test_task_02.py

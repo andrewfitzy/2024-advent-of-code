@@ -1,5 +1,5 @@
 # Specific ignores for this AoC repo
-input*.txt
+input.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

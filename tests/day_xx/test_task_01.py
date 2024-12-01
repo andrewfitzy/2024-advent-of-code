@@ -7,8 +7,8 @@ from tests.test_utils.get_input import get_input
 
 
 class TestTask01(unittest.TestCase):
-    def test_example_input(self):
-        file_content = get_input("tests/day_xx/input_example.txt")
+    def test_example_input_01(self):
+        file_content = get_input("tests/day_xx/input_example_01.txt")
 
         expected = 1
 

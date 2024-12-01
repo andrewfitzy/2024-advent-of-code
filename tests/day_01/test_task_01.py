@@ -12,8 +12,8 @@ class TestTask01(unittest.TestCase):
 
         self.assertRaises(ValueError, Task01.solve, file_content)
 
-    def test_example_input(self):
-        file_content = get_input("tests/day_01/input_example.txt")
+    def test_example_input_01(self):
+        file_content = get_input("tests/day_01/input_example_01.txt")
 
         expected = 11
 
