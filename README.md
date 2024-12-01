@@ -36,10 +36,16 @@ Then I activate the virtual environment:
 ╰─❯ pyenv activate 2024-aoc
 ```
 
-Finally, I install the dependencies:
+Install the dependencies:
 ```bash
 ╰─❯ make install
 ```
+
+Finally, set up pre-commit:
+```bash
+╰─❯ pre-commit install
+```
+
 My environment is now setup and ready to go.
 
 ## Testing
@@ -57,7 +63,7 @@ The pre-commit hook should kick-in, when it does it will lint and prettify the c
 ## Progress
 |                                                | Challenge               |                                         Task 1                                         |                                         Task 2                                         |
 |:-----------------------------------------------|:------------------------|:--------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------:|
-| [Day 01](https://adventofcode.com/2024/day/1)  |                         |                                                                                        |                                                                                        |
+| [Day 01](https://adventofcode.com/2024/day/1)  | Historian Hysteria      | [🌟](https://github.com/andrewfitzy/2024-advent-of-code/blob/main/src/day_01/task_01.py) | [🌟](https://github.com/andrewfitzy/2024-advent-of-code/blob/main/src/day_01/task_02.py) |
 | [Day 02](https://adventofcode.com/2024/day/2)  |                         |                                                                                        |                                                                                        |
 | [Day 03](https://adventofcode.com/2024/day/3)  |                         |                                                                                        |                                                                                        |
 | [Day 04](https://adventofcode.com/2024/day/4)  |                         |                                                                                        |                                                                                        |
