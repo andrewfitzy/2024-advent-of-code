@@ -13,4 +13,4 @@ install: compile-dependencies-all
 
 .PHONY: test
 test:
-	pytest --cov-fail-under=80 --cov=src/ --cov-report=term-missing --cov-report=xml
+	TEST_ENV=local pytest --cov-fail-under=80 --cov=src/ --cov-report=term-missing --cov-report=xml

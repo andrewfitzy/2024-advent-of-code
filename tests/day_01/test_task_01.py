@@ -1,5 +1,9 @@
 # Standard Library
+import os
 import unittest
+
+# Dependencies
+import pytest
 
 # From apps
 from day_01.task_01 import Task01
@@ -20,7 +24,8 @@ class TestTask01(unittest.TestCase):
         result = Task01.solve(file_content)
         assert result == expected
 
-    def xtest_real_input(self):
+    @pytest.mark.skipif(os.environ["TEST_ENV"] == "staging", reason="requires python3.10 or higher")
+    def test_real_input(self):
         file_content = get_input("tests/day_01/input.txt")
 
         expected = 2904518
