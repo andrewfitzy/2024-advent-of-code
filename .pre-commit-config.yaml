@@ -16,3 +16,13 @@ repos:
     hooks:
       - id: isort
         stages: [pre-commit]
+  - repo: local
+    hooks:
+    - id: mypy-check
+      name: mypy-check
+      description: Check types
+      language: system
+      entry: mypy
+      files: 'src/.*'
+      types: [ python ]
+      stages: [pre-commit]

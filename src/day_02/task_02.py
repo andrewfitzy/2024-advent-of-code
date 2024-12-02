@@ -3,31 +3,34 @@ class Task02:
     FALLING: str = "falling"
     NO_CHANGE: str = "no_change"
 
-    def solve(self, file_content):
+    @classmethod
+    def solve(cls, file_content: list[str]) -> int:
         safe_report_count = 0
         for report in file_content:
             levels_txt = report.split()
 
             levels = [int(level) for level in levels_txt]
-            safe_report_count = safe_report_count + 1 if self.is_safe(levels=levels) else safe_report_count
+            safe_report_count = safe_report_count + 1 if cls.is_safe(levels=levels) else safe_report_count
 
         return safe_report_count
 
-    def is_safe(self, levels) -> bool:
+    @classmethod
+    def is_safe(cls, levels: list[int]) -> bool:
         # If the report is already ok, return true
-        if self.check_level(levels):
+        if cls.check_level(levels):
             return True
 
         # Process a list of processed input
-        dampened_levels = self.apply_problem_dampener(levels)
+        dampened_levels = cls.apply_problem_dampener(levels)
         for level in dampened_levels:
             # If any pass we have a valid report so return True
-            if self.check_level(level):
+            if cls.check_level(level):
                 return True
 
         return False
 
-    def apply_problem_dampener(self, levels):
+    @classmethod
+    def apply_problem_dampener(cls, levels: list[int]) -> list[list[int]]:
         # build a list of combinations of report
         dampened_levels = []
         i = 0
@@ -39,16 +42,17 @@ class Task02:
 
         return dampened_levels
 
-    def check_level(self, levels) -> bool:
+    @classmethod
+    def check_level(cls, levels: list[int]) -> bool:
         # work out report trajectory
         first = levels[0]
         second = levels[1]
         if first == second:
             return False
         if first > second:
-            trajectory = self.FALLING
+            trajectory = cls.FALLING
         else:
-            trajectory = self.RISING
+            trajectory = cls.RISING
 
         # process report
         i = 1
@@ -59,10 +63,10 @@ class Task02:
             if difference == 0:
                 return False
 
-            if trajectory == self.FALLING and (difference < 1 or difference > 3):
+            if trajectory == cls.FALLING and (difference < 1 or difference > 3):
                 return False
 
-            if trajectory == self.RISING and (difference < -3 or difference > -1):
+            if trajectory == cls.RISING and (difference < -3 or difference > -1):
                 return False
             i += 1
 

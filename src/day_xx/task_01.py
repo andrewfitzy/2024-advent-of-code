@@ -1,3 +1,4 @@
 class Task01:
-    def solve(file_content):
+    @classmethod
+    def solve(cls, file_content: list[str]) -> int:
         return len(file_content)

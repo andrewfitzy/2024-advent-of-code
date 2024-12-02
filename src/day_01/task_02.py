@@ -1,5 +1,6 @@
 class Task02:
-    def solve(file_content):
+    @classmethod
+    def solve(cls, file_content: list[str]) -> int:
         left_list = []
         right_list = []
 
@@ -13,7 +14,7 @@ class Task02:
             right_list.append(int(line_tokens[1]))
 
         # build a dict of counts
-        value_counts = {}
+        value_counts: dict[int, int] = {}
         for item in right_list:
             value_count = value_counts.get(item, 0)
             value_count = value_count + 1

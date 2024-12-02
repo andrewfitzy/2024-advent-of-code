@@ -2,7 +2,7 @@
 import pathlib
 
 
-def get_input(filename):
+def get_input(filename: str) -> list[str]:
     """
     Takes a filename and returns a list of lines from the file
     """

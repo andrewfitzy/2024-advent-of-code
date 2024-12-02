@@ -16,8 +16,7 @@ class TestTask02(unittest.TestCase):
 
         expected = 4
 
-        task_02 = Task02()
-        result = task_02.solve(file_content)
+        result = Task02.solve(file_content)
         assert result == expected
 
     @pytest.mark.skipif(
@@ -28,6 +27,5 @@ class TestTask02(unittest.TestCase):
 
         expected = 308
 
-        task_02 = Task02()
-        result = task_02.solve(file_content)
+        result = Task02.solve(file_content)
         assert result == expected
