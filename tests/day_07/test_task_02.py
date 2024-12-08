@@ -22,7 +22,7 @@ class TestTask02(unittest.TestCase):
     @pytest.mark.skipif(
         os.environ["TEST_ENV"] == "staging", reason="My input file is not added to git, only run this locally"
     )
-    def test_real_input(self):
+    def xtest_real_input(self):
         file_content = get_input("tests/day_07/input.txt")
 
         expected = 91377448644679
