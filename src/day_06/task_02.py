@@ -1,23 +1,8 @@
 # Standard Library
 from enum import Enum
 
-
-class Point:
-    x: int
-    y: int
-
-    def __init__(self, x: int, y: int):
-        self.x = x
-        self.y = y
-
-    def __eq__(self, other):
-        return (self.x, self.y) == (other.x, other.y)
-
-    def __hash__(self):
-        return hash((self.x, self.y))
-
-    def __str__(self):
-        return str(self.x) + "," + str(self.y)
+# From apps
+from utils.point import Point
 
 
 class Move(Enum):
