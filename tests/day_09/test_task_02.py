@@ -14,7 +14,23 @@ class TestTask02(unittest.TestCase):
     def test_example_input_01(self):
         file_content = get_input("tests/day_09/input_example_01.txt")
 
-        expected = 10
+        expected = 132
+
+        result = Task02.solve(file_content)
+        assert result == expected
+
+    def test_example_input_02(self):
+        file_content = get_input("tests/day_09/input_example_02.txt")
+
+        expected = 2858
+
+        result = Task02.solve(file_content)
+        assert result == expected
+
+    def test_example_input_03(self):
+        file_content = get_input("tests/day_09/input_example_03.txt")
+
+        expected = 3182
 
         result = Task02.solve(file_content)
         assert result == expected
@@ -22,10 +38,10 @@ class TestTask02(unittest.TestCase):
     @pytest.mark.skipif(
         os.environ["TEST_ENV"] == "staging", reason="My input file is not added to git, only run this locally"
     )
-    def xtest_real_input(self):
+    def test_real_input(self):
         file_content = get_input("tests/day_09/input.txt")
 
-        expected = 10
+        expected = 6408966547049
 
         result = Task02.solve(file_content)
         assert result == expected
