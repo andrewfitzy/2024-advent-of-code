@@ -54,6 +54,15 @@ My environment is now setup and ready to go.
 ╰─❯ make test
 ```
 
+To test a single test file, the following command can be used:
+```bash
+╰─❯ make test-file file=<relative_path_to_test>tests/day_22/test_task_02.py
+```
+For example, to test [day 01 task 02](https://github.com/andrewfitzy/2024-advent-of-code/blob/main/tests/day_01/test_task_02.py), the following command can be used:
+```bash
+╰─❯ make test-file file=tests/day_01/test_task_02.py
+```
+
 ## Committing
 The pre-commit hook should kick-in, when it does it will lint and prettify the code.
 ```bash
@@ -84,8 +93,8 @@ The pre-commit hook should kick-in, when it does it will lint and prettify the c
 | [Day 18](https://adventofcode.com/2024/day/18) | RAM Run                | [🌟](https://github.com/andrewfitzy/2024-advent-of-code/blob/main/src/day_18/task_01.py) | [🌟](https://github.com/andrewfitzy/2024-advent-of-code/blob/main/src/day_18/task_02.py) |
 | [Day 19](https://adventofcode.com/2024/day/19) | Linen Layout           | [🌟](https://github.com/andrewfitzy/2024-advent-of-code/blob/main/src/day_19/task_01.py) | [🌟](https://github.com/andrewfitzy/2024-advent-of-code/blob/main/src/day_19/task_02.py) |
 | [Day 20](https://adventofcode.com/2024/day/20) | Race Condition         |                                                                                         |                                                                                         |
-| [Day 21](https://adventofcode.com/2024/day/21) |                    |                                                                                         |                                                                                         |
-| [Day 22](https://adventofcode.com/2024/day/22) |                    |                                                                                         |                                                                                         |
+| [Day 21](https://adventofcode.com/2024/day/21) | Keypad Conundrum       |                                                                                         |                                                                                         |
+| [Day 22](https://adventofcode.com/2024/day/22) | Monkey Market          | [🌟](https://github.com/andrewfitzy/2024-advent-of-code/blob/main/src/day_22/task_01.py) | [🌟](https://github.com/andrewfitzy/2024-advent-of-code/blob/main/src/day_22/task_02.py) |
 | [Day 23](https://adventofcode.com/2024/day/23) |                    |                                                                                         |                                                                                         |
 | [Day 24](https://adventofcode.com/2024/day/24) |                    |                                                                                         |                                                                                         |
 | [Day 25](https://adventofcode.com/2024/day/25) |                    |                                                                                         |                                                                                         |
