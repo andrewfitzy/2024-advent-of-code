@@ -56,7 +56,7 @@ My environment is now setup and ready to go.
 
 To test a single test file, the following command can be used:
 ```bash
-╰─❯ make test-file file=<relative_path_to_test>tests/day_22/test_task_02.py
+╰─❯ make test-file file=<relative_path_to_test>
 ```
 For example, to test [day 01 task 02](https://github.com/andrewfitzy/2024-advent-of-code/blob/main/tests/day_01/test_task_02.py), the following command can be used:
 ```bash
