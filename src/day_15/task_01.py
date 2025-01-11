@@ -114,7 +114,6 @@ class Task01:
                     row = row + 1
                 raise ValueError("Loop ran to completion")
             case "<":
-                # return Point(robot.x-1, robot.y)
                 col = robot_location.x
                 while col >= 0:
                     if WALL == map[robot_location.y][col]:
@@ -124,7 +123,6 @@ class Task01:
                     col = col - 1
                 raise ValueError("Loop ran to completion")
             case ">":
-                # return Point(robot.x+1, robot.y)
                 col = robot_location.x
                 while col < len(map[0]):
                     if WALL == map[robot_location.y][col]:
