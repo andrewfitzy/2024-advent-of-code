@@ -11,10 +11,14 @@ from tests.test_utils.get_input import get_input
 
 
 class TestTask02(unittest.TestCase):
-    def xtest_example_input_01(self):
-        file_content = get_input("tests/day_17/input_example_01.txt")
+    """
+    Note to future self: input_example_01.txt can't generate itself so ends in an infinite loop.
+    """
 
-        expected = 10
+    def test_example_input_02(self):
+        file_content = get_input("tests/day_17/input_example_02.txt")
+
+        expected = 117440
 
         result = Task02.solve(file_content)
         assert result == expected
@@ -22,10 +26,10 @@ class TestTask02(unittest.TestCase):
     @pytest.mark.skipif(
         os.environ["TEST_ENV"] == "staging", reason="My input file is not added to git, only run this locally"
     )
-    def xtest_real_input(self):
+    def test_real_input(self):
         file_content = get_input("tests/day_17/input.txt")
 
-        expected = 10
+        expected = 105734774294938
 
         result = Task02.solve(file_content)
         assert result == expected
