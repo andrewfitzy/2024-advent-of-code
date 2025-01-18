@@ -1,10 +1,20 @@
+# Standard Library
+import types
+
 # From apps
 from utils.point import Point
 
-ROBOT = "@"
-BOX = "O"
-WALL = "#"
-EMPTY = "."
+content = types.SimpleNamespace()
+content.ROBOT = "@"
+content.BOX = "O"
+content.WALL = "#"
+content.EMPTY = "."
+
+move = types.SimpleNamespace()
+move.UP = "^"
+move.DOWN = "v"
+move.LEFT = "<"
+move.RIGHT = ">"
 
 
 class Task01:
@@ -18,7 +28,7 @@ class Task01:
 
             line_chars = list(line)
 
-            if line.startswith("#"):
+            if line.startswith(content.WALL):
                 map.append(line_chars)
                 continue
 
@@ -43,20 +53,20 @@ class Task01:
         robot_location = cls.find_robot(map=new_map)
         next_location = cls.get_next_location(robot_location, direction)
 
-        if WALL == new_map[next_location.y][next_location.x]:
+        if content.WALL == new_map[next_location.y][next_location.x]:
             return new_map
-        if EMPTY == new_map[next_location.y][next_location.x]:
-            new_map[robot_location.y][robot_location.x] = EMPTY
-            new_map[next_location.y][next_location.x] = ROBOT
+        if content.EMPTY == new_map[next_location.y][next_location.x]:
+            new_map[robot_location.y][robot_location.x] = content.EMPTY
+            new_map[next_location.y][next_location.x] = content.ROBOT
             return new_map
-        if BOX == new_map[next_location.y][next_location.x]:
+        if content.BOX == new_map[next_location.y][next_location.x]:
             can_move, next_free_space = cls.check_movement(
                 direction=direction, map=new_map, robot_location=robot_location
             )
             if can_move and next_free_space:
-                new_map[next_free_space.y][next_free_space.x] = BOX
-                new_map[next_location.y][next_location.x] = ROBOT
-                new_map[robot_location.y][robot_location.x] = EMPTY
+                new_map[next_free_space.y][next_free_space.x] = content.BOX
+                new_map[next_location.y][next_location.x] = content.ROBOT
+                new_map[robot_location.y][robot_location.x] = content.EMPTY
             return new_map
         return new_map
 
@@ -64,16 +74,16 @@ class Task01:
     def find_robot(cls, map: list[list[str]]) -> Point:
         for row in range(len(map)):
             for col in range(len(map[row])):
-                if ROBOT == map[row][col]:
+                if content.ROBOT == map[row][col]:
                     return Point(x=col, y=row)
-        raise ValueError("Robot not present in map")
+        raise ValueError("🚨 Robot not present in map 🚨")
 
     @classmethod
     def calculate_value(cls, map: list[list[str]]) -> int:
         total = 0
         for row in range(len(map)):
             for col in range(len(map[row])):
-                if BOX == map[row][col]:
+                if content.BOX == map[row][col]:
                     box_value = row * 100 + col
                     total = total + box_value
         return total
@@ -81,56 +91,56 @@ class Task01:
     @classmethod
     def get_next_location(cls, robot: Point, direction: str) -> Point:
         match direction:
-            case "^":
+            case move.UP:
                 return Point(robot.x, robot.y - 1)
-            case "v":
+            case move.DOWN:
                 return Point(robot.x, robot.y + 1)
-            case "<":
+            case move.LEFT:
                 return Point(robot.x - 1, robot.y)
-            case ">":
+            case move.RIGHT:
                 return Point(robot.x + 1, robot.y)
             case _:
-                raise ValueError("Unexpected direction encountered")
+                raise ValueError("Unexpected direction encountered: {direction}".format(direction=direction))
 
     @classmethod
     def check_movement(cls, direction: str, map: list[list[str]], robot_location: Point) -> tuple[bool, Point | None]:
         match direction:
-            case "^":
+            case move.UP:
                 row = robot_location.y
                 while row >= 0:
-                    if WALL == map[row][robot_location.x]:
+                    if content.WALL == map[row][robot_location.x]:
                         return (False, None)
-                    if EMPTY == map[row][robot_location.x]:
+                    if content.EMPTY == map[row][robot_location.x]:
                         return (True, Point(robot_location.x, row))
                     row = row - 1
                 raise ValueError("Loop ran to completion")
-            case "v":
+            case move.DOWN:
                 row = robot_location.y
                 while row < len(map):
-                    if WALL == map[row][robot_location.x]:
+                    if content.WALL == map[row][robot_location.x]:
                         return (False, None)
-                    if EMPTY == map[row][robot_location.x]:
+                    if content.EMPTY == map[row][robot_location.x]:
                         return (True, Point(robot_location.x, row))
                     row = row + 1
                 raise ValueError("Loop ran to completion")
-            case "<":
+            case move.LEFT:
                 col = robot_location.x
                 while col >= 0:
-                    if WALL == map[robot_location.y][col]:
+                    if content.WALL == map[robot_location.y][col]:
                         return (False, None)
-                    if EMPTY == map[robot_location.y][col]:
+                    if content.EMPTY == map[robot_location.y][col]:
                         return (True, Point(col, robot_location.y))
                     col = col - 1
                 raise ValueError("Loop ran to completion")
-            case ">":
+            case move.RIGHT:
                 col = robot_location.x
                 while col < len(map[0]):
-                    if WALL == map[robot_location.y][col]:
+                    if content.WALL == map[robot_location.y][col]:
                         return (False, None)
-                    if EMPTY == map[robot_location.y][col]:
+                    if content.EMPTY == map[robot_location.y][col]:
                         return (True, Point(col, robot_location.y))
                     col = col + 1
                 raise ValueError("Loop ran to completion")
             case _:
-                raise ValueError("Unexpected direction encountered")
+                raise ValueError("Unexpected direction encountered: {direction}".format(direction=direction))
         return (False, None)
