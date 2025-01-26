@@ -25,7 +25,7 @@ First step is to install the version of python to use. I use pyenv to manage my 
 the version I want to use with the following command:
 ```bash
 ╰─❯ pyenv install 3.13.0
-````
+```
 
 Next I create a virtual environment for the project:
 ```bash
