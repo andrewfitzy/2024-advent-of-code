@@ -14,7 +14,15 @@ class TestTask02(unittest.TestCase):
     def test_example_input_01(self):
         file_content = get_input("tests/day_16/input_example_01.txt")
 
-        expected = 150
+        expected = 45
+
+        result = Task02.solve(file_content)
+        assert result == expected
+
+    def test_example_input_02(self):
+        file_content = get_input("tests/day_16/input_example_02.txt")
+
+        expected = 64
 
         result = Task02.solve(file_content)
         assert result == expected

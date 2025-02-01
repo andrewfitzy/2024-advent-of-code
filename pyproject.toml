@@ -57,6 +57,10 @@ line-ending = "auto"
 # Flag errors (`C901`) whenever the complexity level exceeds 5.
 max-complexity = 5
 
+[tool.ruff.lint.pylint]
+# Force all functions to use names arguments
+max-positional-args = 1
+
 [tool.isort]
 profile = "black"
 line_length = 120

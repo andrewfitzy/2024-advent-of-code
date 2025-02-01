@@ -2,7 +2,6 @@
 import heapq
 import types
 from dataclasses import dataclass, field
-from typing import Any
 
 # From apps
 from utils.point import Point
@@ -23,8 +22,8 @@ direction.RIGHT = ">"
 @dataclass(order=True)
 class PrioritizedItem:
     priority: int
-    direction: Any = field(compare=False)
-    point: Any = field(compare=False)
+    direction: str = field(compare=False)
+    point: Point = field(compare=False)
 
 
 class Task01:
