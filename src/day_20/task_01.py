@@ -1,0 +1,125 @@
+# Standard Library
+import types
+from collections import deque
+
+# From apps
+from utils.point import Point
+
+content = types.SimpleNamespace()
+content.START = "S"
+content.END = "E"
+content.WALL = "#"
+content.SPACE = "."
+
+
+class Task01:
+    @classmethod
+    def solve(cls, file_content: list[str]) -> int:
+        maze: list[list[str]] = []
+        for line in file_content:
+            maze.append(list(line))
+
+        for row in range(len(maze)):
+            for col in range(len(maze[row])):
+                if content.START == maze[row][col]:
+                    start = Point(col, row)
+                if content.END == maze[row][col]:
+                    end = Point(col, row)
+
+        path = cls.get_path(start=start, end=end, map=maze)
+
+        cheats = cls.get_cheats(path, map=maze)
+
+        acceptable_cheats = 0
+        for key, value in cheats.items():
+            if value >= 100:
+                acceptable_cheats = acceptable_cheats + 1
+
+        return acceptable_cheats
+
+    @classmethod
+    def get_path(cls, start: Point, end: Point, map: list[list[str]]) -> list[Point]:
+        step_queue: deque[Point] = deque()
+        step_queue.append(start)
+
+        path = []
+        seen = set()
+        while len(step_queue) > 0:
+            point = step_queue.popleft()
+            if point in seen:
+                continue
+            seen.add(point)
+
+            path.append(point)
+            if content.END == map[point.y][point.x]:
+                break
+
+            moves = cls.get_available_moves(point=point, map=map)
+            step_queue.extend(moves)
+
+        return path
+
+    @classmethod
+    def get_available_moves(cls, point: Point, map: list[list[str]]) -> list[Point]:
+        available_moves = []
+        if point.x - 1 >= 0 and content.WALL != map[point.y][point.x - 1]:
+            # can move left
+            available_moves.append(Point(point.x - 1, point.y))
+
+        if point.y - 1 >= 0 and content.WALL != map[point.y - 1][point.x]:
+            # can move up
+            available_moves.append(Point(point.x, point.y - 1))
+
+        if point.x + 1 < len(map[point.y]) and content.WALL != map[point.y][point.x + 1]:
+            # can move right
+            available_moves.append(Point(point.x + 1, point.y))
+
+        if point.y + 1 < len(map) and content.WALL != map[point.y + 1][point.x]:
+            # can move down
+            available_moves.append(Point(point.x, point.y + 1))
+
+        return available_moves
+
+    @classmethod
+    def get_cheats(cls, path: list[Point], map: list[list[str]]) -> dict[tuple[Point, Point], int]:
+        position_lookup: dict[Point, int] = dict()
+        for index in range(len(path)):
+            position_lookup[path[index]] = index
+
+        cheat_costs: dict[tuple[Point, Point], int] = {}
+        for point in path:
+            cheat_moves = cls.get_cheat_moves(point, map)
+            for target in cheat_moves:
+                start_index = position_lookup[point]
+                end_index = position_lookup[target]
+                cost = end_index - start_index - 2
+
+                if cost > 0:  # negative value means going backwards
+                    cheat_costs[(point, target)] = cost
+        return cheat_costs
+
+    @classmethod
+    def get_cheat_moves(cls, point: Point, map: list[list[str]]) -> set[Point]:
+        target_content = {content.SPACE, content.END}
+        cheat_moves = set()
+        if point.x - 1 >= 0 and content.WALL == map[point.y][point.x - 1]:
+            # left is a wall
+            if point.x - 2 >= 0 and map[point.y][point.x - 2] in target_content:
+                cheat_moves.add(Point(point.x - 2, point.y))
+
+        if point.y - 1 >= 0 and content.WALL == map[point.y - 1][point.x]:
+            # up is a wall
+            if point.y - 2 >= 0 and map[point.y - 2][point.x] in target_content:
+                cheat_moves.add(Point(point.x, point.y - 2))
+
+        if point.x + 1 < len(map[point.y]) and content.WALL == map[point.y][point.x + 1]:
+            # right is a wall
+            if point.x + 2 < len(map[point.y]) and map[point.y][point.x + 2] in target_content:
+                cheat_moves.add(Point(point.x + 2, point.y))
+
+        if point.y + 1 < len(map) and content.WALL == map[point.y + 1][point.x]:
+            # down is a wall
+            if point.y + 2 < len(map) and map[point.y + 2][point.x] in target_content:
+                cheat_moves.add(Point(point.x, point.y + 2))
+
+        return cheat_moves
