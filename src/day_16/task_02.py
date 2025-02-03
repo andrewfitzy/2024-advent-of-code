@@ -41,42 +41,31 @@ class Task02:
                 if content.END == maze[row][col]:
                     end = Point(col, row)
 
-        cost = cls.get_cheapest_path(start=start, end=end, maze=maze)
+        cost, path = cls.get_cheapest_path(start=start, end=end, maze=maze)
         paths = cls.get_paths_with_cost(start=start, end=end, cost=cost, maze=maze)
 
-        for path in paths:
-            cls.print_map(path, maze)
-            print("")
-
         seen = set()
-        for path in paths:
-            for point in path:
+        for path_option in paths:
+            for point in path_option:
                 seen.add(point)
         print(len(seen))
         return len(seen)
-
-    @classmethod
-    def print_map(cls, path, maze: list[list[str]]):
-        for row in maze:
-            print("".join(row))
-
-        for row_i in range(len(maze)):
-            row_str = []
-            for col_i in range(len(maze[row_i])):
-                if Point(x=col_i, y=row_i) in path:
-                    row_str.append("o")
-                    continue
-                row_str.append(maze[row_i][col_i])
-            print("".join(row_str))
 
     @classmethod
     def get_paths_with_cost(cls, start: Point, end: Point, cost: int, maze: list[list[str]]) -> list[set[Point]]:
         step_queue: list[PrioritizedItem] = []
         heapq.heappush(step_queue, PrioritizedItem(priority=0, direction=direction.RIGHT, point=start, path=set()))
 
+        # For a point and direction, what's the best cost we've seen.
+        cost_tracker: dict[tuple[Point, str], int] = {}
+
         paths = []
         while len(step_queue) > 0:
             item = heapq.heappop(step_queue)
+
+            current_best_cost = cost_tracker.get((item.point, item.direction), float("inf"))
+            if item.priority > current_best_cost:
+                continue
 
             point = item.point
             if content.WALL == maze[point.y][point.x]:
@@ -95,6 +84,9 @@ class Task02:
 
             moves = cls.get_available_moves(point, item.direction, maze)
             for next_point, next_cost, next_direction in moves:
+                # update cost if we have one better
+                cost_tracker[(item.point, item.direction)] = item.priority
+
                 new_cost = item.priority + next_cost
                 new_path = item.path.copy()
                 new_path.add(point)
@@ -106,7 +98,7 @@ class Task02:
         return paths
 
     @classmethod
-    def get_cheapest_path(cls, start: Point, end: Point, maze: list[list[str]]) -> int:
+    def get_cheapest_path(cls, start: Point, end: Point, maze: list[list[str]]) -> tuple[int, set[Point]]:
         step_queue: list[PrioritizedItem] = []
         heapq.heappush(step_queue, PrioritizedItem(priority=0, direction=direction.RIGHT, point=start, path=set()))
 
@@ -120,19 +112,21 @@ class Task02:
             if content.WALL == maze[point.y][point.x]:
                 continue
             if content.END == maze[point.y][point.x]:
-                return item.priority
+                item.path.add(point)
+                return (item.priority, item.path)
 
             moves = cls.get_available_moves(point, item.direction, maze)
             for next_point, next_cost, next_direction in moves:
                 new_cost = item.priority + next_cost
-
+                new_path = item.path.copy()
+                new_path.add(point)
                 if (next_point, next_direction) not in seen:
                     heapq.heappush(
                         step_queue,
-                        PrioritizedItem(priority=new_cost, direction=next_direction, point=next_point, path=item.path),
+                        PrioritizedItem(priority=new_cost, direction=next_direction, point=next_point, path=new_path),
                     )
 
-        return -1
+        return (-1, set())
 
     @classmethod
     def get_available_moves(cls, point: Point, facing: str, map: list[list[str]]) -> list[tuple[Point, int, str]]:
@@ -142,8 +136,6 @@ class Task02:
             left_point = Point(point.x - 1, point.y)
             if direction.LEFT == facing:
                 available_moves.append((left_point, 1, direction.LEFT))
-            elif direction.RIGHT == facing:
-                available_moves.append((left_point, 2001, direction.LEFT))
             else:
                 available_moves.append((left_point, 1001, direction.LEFT))
         if point.y - 1 >= 0 and content.WALL != map[point.y - 1][point.x]:
@@ -151,8 +143,6 @@ class Task02:
             up_point = Point(point.x, point.y - 1)
             if direction.UP == facing:
                 available_moves.append((up_point, 1, direction.UP))
-            elif direction.DOWN == facing:
-                available_moves.append((up_point, 2001, direction.UP))
             else:
                 available_moves.append((up_point, 1001, direction.UP))
 
@@ -161,8 +151,6 @@ class Task02:
             right_point = Point(point.x + 1, point.y)
             if direction.RIGHT == facing:
                 available_moves.append((right_point, 1, direction.RIGHT))
-            elif direction.LEFT == facing:
-                available_moves.append((right_point, 2001, direction.RIGHT))
             else:
                 available_moves.append((right_point, 1001, direction.RIGHT))
 
@@ -171,8 +159,6 @@ class Task02:
             down_point = Point(point.x, point.y + 1)
             if direction.DOWN == facing:
                 available_moves.append((down_point, 1, direction.DOWN))
-            elif direction.UP == facing:
-                available_moves.append((down_point, 2001, direction.DOWN))
             else:
                 available_moves.append((down_point, 1001, direction.DOWN))
 

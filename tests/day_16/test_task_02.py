@@ -30,10 +30,10 @@ class TestTask02(unittest.TestCase):
     @pytest.mark.skipif(
         os.environ["TEST_ENV"] == "staging", reason="My input file is not added to git, only run this locally"
     )
-    def xtest_real_input(self):
+    def test_real_input(self):
         file_content = get_input("tests/day_16/input.txt")
 
-        expected = 10
+        expected = 538  # runs in about 5 seconds
 
         result = Task02.solve(file_content)
         assert result == expected

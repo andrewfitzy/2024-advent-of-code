@@ -80,8 +80,6 @@ class Task01:
             left_point = Point(point.x - 1, point.y)
             if direction.LEFT == facing:
                 available_moves.append((left_point, 1, direction.LEFT))
-            elif direction.RIGHT == facing:
-                available_moves.append((left_point, 2001, direction.LEFT))
             else:
                 available_moves.append((left_point, 1001, direction.LEFT))
         if point.y - 1 >= 0 and content.WALL != map[point.y - 1][point.x]:
@@ -89,8 +87,6 @@ class Task01:
             up_point = Point(point.x, point.y - 1)
             if direction.UP == facing:
                 available_moves.append((up_point, 1, direction.UP))
-            elif direction.DOWN == facing:
-                available_moves.append((up_point, 2001, direction.UP))
             else:
                 available_moves.append((up_point, 1001, direction.UP))
 
@@ -99,8 +95,6 @@ class Task01:
             right_point = Point(point.x + 1, point.y)
             if direction.RIGHT == facing:
                 available_moves.append((right_point, 1, direction.RIGHT))
-            elif direction.LEFT == facing:
-                available_moves.append((right_point, 2001, direction.RIGHT))
             else:
                 available_moves.append((right_point, 1001, direction.RIGHT))
 
@@ -109,8 +103,6 @@ class Task01:
             down_point = Point(point.x, point.y + 1)
             if direction.DOWN == facing:
                 available_moves.append((down_point, 1, direction.DOWN))
-            elif direction.UP == facing:
-                available_moves.append((down_point, 2001, direction.DOWN))
             else:
                 available_moves.append((down_point, 1001, direction.DOWN))
 
