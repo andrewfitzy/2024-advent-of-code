@@ -14,7 +14,7 @@ class TestTask02(unittest.TestCase):
     def test_example_input_01(self):
         file_content = get_input("tests/day_20/input_example_01.txt")
 
-        expected = 150
+        expected = 0
 
         result = Task02.solve(file_content)
         assert result == expected
@@ -22,10 +22,10 @@ class TestTask02(unittest.TestCase):
     @pytest.mark.skipif(
         os.environ["TEST_ENV"] == "staging", reason="My input file is not added to git, only run this locally"
     )
-    def xtest_real_input(self):
+    def test_real_input(self):
         file_content = get_input("tests/day_20/input.txt")
 
-        expected = 10
+        expected = 983905
 
         result = Task02.solve(file_content)
         assert result == expected
