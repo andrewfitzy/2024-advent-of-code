@@ -11,29 +11,13 @@ from tests.test_utils.get_input import get_input
 
 
 class TestTask02(unittest.TestCase):
-    def xtest_example_input_01(self):
-        file_content = get_input("tests/day_24/input_example_01.txt")
-
-        expected = 10
-
-        result = Task02.solve(file_content)
-        assert result == expected
-
-    def xtest_example_input_02(self):
-        file_content = get_input("tests/day_24/input_example_02.txt")
-
-        expected = 10
-
-        result = Task02.solve(file_content)
-        assert result == expected
-
     @pytest.mark.skipif(
         os.environ["TEST_ENV"] == "staging", reason="My input file is not added to git, only run this locally"
     )
-    def xtest_real_input(self):
+    def test_real_input(self):
         file_content = get_input("tests/day_24/input.txt")
 
-        expected = 10
+        expected = "gst,khg,nhn,tvb,vdc,z12,z21,z33"
 
         result = Task02.solve(file_content)
         assert result == expected
